@@ -9,7 +9,7 @@ I am using Visual Studio 2015 Community edition. Download it from https://www.vi
 
 ### Check your npm version and update if needed
 
-Updating npm could be done in several ways, but the best way seems to be opening a powershell window (remember to run as administrator). To run PowerShell as Administrator, click Start, search for PowerShell, right-click PowerShell and select Run as Administrator.
+Updating npm could be done in several ways, but the best way seems to a script from [Felix Rieseberg](https://github.com/felixrieseberg/npm-windows-upgrade) by opening a powershell window as administrator). To run PowerShell as Administrator, click Start, search for PowerShell, right-click PowerShell and select Run as Administrator.
 
 Then run these lines in the powershell window: 
 ```
