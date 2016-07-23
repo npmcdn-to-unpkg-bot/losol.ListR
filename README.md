@@ -2,13 +2,26 @@
 
 A Asp.net core web application for storing a grocery shopping list
 
-## Install asp.net core and IDE
+## Prerequisities
+
+### Install asp.net core and IDE
 I am using Visual Studio 2015 Community edition. Download it from https://www.visualstudio.com/products/free-developer-offers-vs
 
+### Check your npm version and update if needed
+
+Updating npm could be done in several ways, but the best way seems to be opening a powershell window (remember to run as administrator). To run PowerShell as Administrator, click Start, search for PowerShell, right-click PowerShell and select Run as Administrator.
+
+Then run these lines in the powershell window: 
+```
+Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
+npm install --global --production npm-windows-upgrade
+npm-windows-upgrade
+```
 
 # Making this application
 
 ## Installing the asp.net core template
+Make a new project in visual studio. Use the top right bar to search for "ASP.NET Core Web Application (.NET Core)". Remember to change User Authentication in the next window, and make sure to choose "Individual accounts" if you want user management.
 
 ## Add NPM
 Right click on your project, choose "Add" --> "New item...". Search in the search bar top right for "npm Configuration File", and make a new file to the root with the suggested file name "package.json"
@@ -16,7 +29,7 @@ Right click on your project, choose "Add" --> "New item...". Search in the searc
 Use the package.json from angular.io
 ```
 {
-  "name": "angular2-quickstart",
+  "name": "losol-listr",
   "version": "1.0.0",
   "scripts": {
     "start": "tsc && concurrently \"npm run tsc:w\" \"npm run lite\" ",
