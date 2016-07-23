@@ -2,12 +2,58 @@
 
 A Asp.net core web application for storing a grocery shopping list
 
-## Install asp.net 5
-On commandline:
-Install dnvm: @powershell -NoProfile -ExecutionPolicy unrestricted -Command "&{$Branch='dev';iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/aspnet/Home/dev/dnvminstall.ps1'))}"
-Install .net execution enviroment (dnx): dnvm upgrade -r coreclr 
-Install gulp: npm install -g gulp
+## Install asp.net core and IDE
+I am using Visual Studio 2015 Community edition. Download it from https://www.visualstudio.com/products/free-developer-offers-vs
 
+
+# Making this application
+
+## Installing the asp.net core template
+
+## Add NPM
+Right click on your project, choose "Add" --> "New item...". Search in the search bar top right for "npm Configuration File", and make a new file to the root with the suggested file name "package.json"
+
+Use the package.json from angular.io
+```
+{
+  "name": "angular2-quickstart",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "tsc && concurrently \"npm run tsc:w\" \"npm run lite\" ",
+    "lite": "lite-server",
+    "postinstall": "typings install",
+    "tsc": "tsc",
+    "tsc:w": "tsc -w",
+    "typings": "typings"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@angular/common": "2.0.0-rc.4",
+    "@angular/compiler": "2.0.0-rc.4",
+    "@angular/core": "2.0.0-rc.4",
+    "@angular/forms": "0.2.0",
+    "@angular/http": "2.0.0-rc.4",
+    "@angular/platform-browser": "2.0.0-rc.4",
+    "@angular/platform-browser-dynamic": "2.0.0-rc.4",
+    "@angular/router": "3.0.0-beta.1",
+    "@angular/router-deprecated": "2.0.0-rc.2",
+    "@angular/upgrade": "2.0.0-rc.4",
+    "systemjs": "0.19.27",
+    "core-js": "^2.4.0",
+    "reflect-metadata": "^0.1.3",
+    "rxjs": "5.0.0-beta.6",
+    "zone.js": "^0.6.12",
+    "angular2-in-memory-web-api": "0.0.14",
+    "bootstrap": "^3.3.6"
+  },
+  "devDependencies": {
+    "concurrently": "^2.0.0",
+    "lite-server": "^2.2.0",
+    "typescript": "^1.8.10",
+    "typings":"^1.0.4"
+  }
+}
+```
 
 ## Set user secrets
 Install SecretManager tool by running this command in app folder: dnu commands install Microsoft.Extensions.SecretManager
@@ -26,13 +72,7 @@ The makecert tool is available from windows SDK. https://www.microsoft.com/en-us
 dnu restore
 
 ## After model changes
-dnx ef migrations add migrationname
-dnx ef database update
-
-If  error: "More than one DbContext was found. Specify which one to use.". Then you could use those lines
-
-* dnx ef migrations add fix -c ApplicationDbContext
-* dnx ef database update -c ApplicationDbContext
+dotnet ef database update
 
 
 ## Going live on Azure
