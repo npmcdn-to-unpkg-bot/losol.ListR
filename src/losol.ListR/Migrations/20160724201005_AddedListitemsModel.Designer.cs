@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using losol.ListR.Data;
 
-namespace losol.ListR.Data.Migrations
+namespace losol.ListR.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20160724194705_Init")]
-    partial class Init
+    [Migration("20160724201005_AddedListitemsModel")]
+    partial class AddedListitemsModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -64,6 +64,33 @@ namespace losol.ListR.Data.Migrations
                         .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("losol.ListR.Models.ListItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("AddedDate");
+
+                    b.Property<string>("Category");
+
+                    b.Property<string>("Description")
+                        .IsRequired();
+
+                    b.Property<bool>("IsDone");
+
+                    b.Property<bool>("IsImportant");
+
+                    b.Property<Guid>("ListGuid");
+
+                    b.Property<float>("No");
+
+                    b.Property<string>("Unit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ListItem");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole", b =>

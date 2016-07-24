@@ -378,10 +378,12 @@ Run commands to store AppId and AppSecret:
 ## Making the models (code-first)
 
 After each change to the models you will need to update the database. In the package manager console: 
-# Add-Migration [MigrationName]
-# Update-Database
+PM> Add-Migration [MigrationName] 
+PM> Update-Database
 
-
+Alternatively you could use the command prompt: 
+> dotnet ef migrations add [MigrationName] 
+> dotnet ef database update
 
 ## Adding dotnet watch
 Dotnet watcher is a convenient way of hosting a project under development. It automatically updates when files are changed.

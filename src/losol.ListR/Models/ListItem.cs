@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,11 +9,13 @@ namespace losol.ListR.Models
 {
     public class ListItem
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
         [ScaffoldColumn(false)]
-        public string ListItemGuid { get; set; }
+        public Guid Id { get; set; }
 
         [ScaffoldColumn(false)]
-        public string ListGuid { get; set; }
+        public Guid ListGuid { get; set; }
 
         [Display(Name = "Antall")]
         public float No { get; set; }
