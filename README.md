@@ -374,16 +374,36 @@ Run commands to store AppId and AppSecret:
 * user-secret set Authentication:Google:ClientSecret 4gwb4b242546
 
 
-## Make self signed certificate
-The makecert tool is available from windows SDK. https://www.microsoft.com/en-us/download/details.aspx?id=8279
+
+## Making the models (code-first)
+
+After each change to the models you will need to update the database. In the package manager console: 
+# Add-Migration [MigrationName]
+# Update-Database
 
 
-## After updating project.json
-dnu restore
 
-## After model changes
-dotnet ef database update
+## Adding dotnet watch
+Dotnet watcher is a convenient way of hosting a project under development. It automatically updates when files are changed.
+Add Microsoft.DotNet.Watcher.Tools to the project.json file in the tools section
 
+```json
+"tools": {
+	(...)
+    "Microsoft.DotNet.Watcher.Tools": "1.0.0-preview2-final"
+},
+```
+
+Then run the commmand to restore packages
+    dotnet restore
+## Run the kestrel server
+For running under development, make sure to set enviroment to _Development_
+    set ASPNETCORE_ENVIRONMENT=Development
+
+To run the Kestrel server, run
+    dotnet run
+
+or dotnet watch
 
 ## Going live on Azure
 For some reason I had trouble configuring the connectionstring to the azure sql database. However after adding the connectionstring both as DefaultConnection as well as Data:DefaultConnection:ConnectionString I managed to get the application to talk with the database.
