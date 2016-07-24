@@ -1,6 +1,6 @@
 # ListR application
 
-A Asp.net core web application for storing a grocery shopping list
+A Asp.net core web application for handling a grocery shopping list
 
 ## Prerequisities
 
@@ -18,14 +18,15 @@ npm install --global --production npm-windows-upgrade
 npm-windows-upgrade
 ```
 
-## Add a new project from template
+## Make a new project from template
 Make a new project in visual studio. Use the top right bar to search for "ASP.NET Core Web Application (.NET Core)". Remember to change User Authentication in the next window, and make sure to choose "Individual accounts" if you want user management.
 
-## Add NPM and packages
+## Adding Angular 2
+### Add packages with npm | package.json
 Right click on your project, choose "Add" --> "New item...". Search in the search bar top right for "npm Configuration File", and make a new file to the root with the suggested file name "package.json"
 
 Use the package.json from [angular.io - quickstart](https://angular.io/docs/ts/latest/quickstart.html#!#create-and-configure), just edit your project name
-```
+```json
 {
   "name": "losol-listr",
   "version": "1.0.0",
@@ -55,21 +56,30 @@ Use the package.json from [angular.io - quickstart](https://angular.io/docs/ts/l
     "rxjs": "5.0.0-beta.6",
     "zone.js": "^0.6.12",
     "angular2-in-memory-web-api": "0.0.14",
-    "bootstrap": "^3.3.6"
+    "bootstrap": "4.0.0-alpha.2"
   },
   "devDependencies": {
     "concurrently": "^2.0.0",
     "lite-server": "^2.2.0",
     "typescript": "^1.8.10",
-    "typings":"^1.0.4"
-  }
+    "typings": "^1.0.4",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-cssmin": "0.1.7",
+    "gulp-uglify": "1.2.0",
+    "rimraf": "2.2.8",
+    "path": "^0.12.7",
+    "gulp-clean": "^0.3.2",
+    "fs": "^0.0.2",
+    "gulp-typescript": "^2.13.1"
+	  }
 }
 ```
-## Prepare for angular 2 and typescript
-### Add the SystemJS configuration file, tsconfig.js
+
+### Add the TypeScript compiler configuration file | tsconfig.js
 tsconfig.json is the TypeScript compiler configuration file. Right click on your project and choose add new item. Search for "TypeScript JSON Configuration File" and choose the suggested filename tsconfig.js
 
-```
+```json
 {
   "compilerOptions": {
     "target": "es5",
@@ -79,13 +89,18 @@ tsconfig.json is the TypeScript compiler configuration file. Right click on your
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "removeComments": false,
-    "noImplicitAny": false
-  }
+    "noImplicitAny": false,
+    "outDir": "../wwwroot/app/"
+  },
+  "exclude": [
+    "node_modules",
+    "wwwroot"
+  ]
 }
+
 ```
 
-
-### Add typings / TypeScript definition files
+### Add typings / TypeScript definition files | typings.json
 typings.json identifies TypeScript definition files. Add the file typings.json to the root folder (Add --> new item --> json file).
 
 ```json
@@ -97,61 +112,68 @@ typings.json identifies TypeScript definition files. Add the file typings.json t
   }
 }
 ```
-### Add systemjs.config.js, the SystemJS configuration file.
+### Add the SystemJS configuration file | systemjs.config.js
 systemjs.config.js is the SystemJS configuration file. Add it to the wwwroot folder. 
 
 ```
-(function(global) {
-  // map tells the System loader where to look for things
-  var map = {
-    'app':                        'app', // 'dist',
-    '@angular':                   'node_modules/@angular',
-    'angular2-in-memory-web-api': 'node_modules/angular2-in-memory-web-api',
-    'rxjs':                       'node_modules/rxjs'
-  };
-  // packages tells the System loader how to load when no filename and/or no extension
-  var packages = {
-    'app':                        { main: 'main.js',  defaultExtension: 'js' },
-    'rxjs':                       { defaultExtension: 'js' },
-    'angular2-in-memory-web-api': { main: 'index.js', defaultExtension: 'js' },
-  };
-  var ngPackageNames = [
-    'common',
-    'compiler',
-    'core',
-    'forms',
-    'http',
-    'platform-browser',
-    'platform-browser-dynamic',
-    'router',
-    'router-deprecated',
-    'upgrade',
-  ];
-  // Individual files (~300 requests):
-  function packIndex(pkgName) {
-    packages['@angular/'+pkgName] = { main: 'index.js', defaultExtension: 'js' };
-  }
-  // Bundled (~40 requests):
-  function packUmd(pkgName) {
-    packages['@angular/'+pkgName] = { main: '/bundles/' + pkgName + '.umd.js', defaultExtension: 'js' };
-  }
-  // Most environments should use UMD; some (Karma) need the individual index files
-  var setPackageConfig = System.packageWithIndex ? packIndex : packUmd;
-  // Add package entries for angular packages
-  ngPackageNames.forEach(setPackageConfig);
-  var config = {
-    map: map,
-    packages: packages
-  };
-  System.config(config);
+/**
+ * System configuration for Angular 2 samples
+ * Adjust as necessary for your application needs.
+ */
+(function (global) {
+    // map tells the System loader where to look for things
+    var map = {
+        'app': 'app', // 'dist',
+        '@angular': 'lib/@angular',
+        'angular2-in-memory-web-api': 'lib/angular2-in-memory-web-api',
+        'rxjs': 'lib/rxjs'
+    };
+    // packages tells the System loader how to load when no filename and/or no extension
+    var packages = {
+        'app': { main: 'main.js', defaultExtension: 'js' },
+        'rxjs': { defaultExtension: 'js' },
+        'angular2-in-memory-web-api': { main: 'index.js', defaultExtension: 'js' },
+    };
+    var ngPackageNames = [
+      'common',
+      'compiler',
+      'core',
+      'forms',
+      'http',
+      'platform-browser',
+      'platform-browser-dynamic',
+      'router',
+      'router-deprecated',
+      'upgrade',
+    ];
+    // Individual files (~300 requests):
+    function packIndex(pkgName) {
+        packages['@angular/' + pkgName] = { main: 'index.js', defaultExtension: 'js' };
+    }
+    // Bundled (~40 requests):
+    function packUmd(pkgName) {
+        packages['@angular/' + pkgName] = { main: '/bundles/' + pkgName + '.umd.js', defaultExtension: 'js' };
+    }
+    // Most environments should use UMD; some (Karma) need the individual index files
+    var setPackageConfig = System.packageWithIndex ? packIndex : packUmd;
+    // Add package entries for angular packages
+    ngPackageNames.forEach(setPackageConfig);
+    var config = {
+        map: map,
+        packages: packages
+    };
+    System.config(config);
 })(this);
+
 ```
 
-### Add a scripts folder
-We need a scripts folder to write our uncompiled scripts. Add it to the root of your project.
 
-### Add a gulpfile
+### Add gulpfile.js and gulp
 In the menu: Add --> New Item --> Gulp Configuration File. Use the suggested name _gulpfile.js_
+After adding the file open package manager console (View --> Other windows --> Package manager console) and run
+    npm install gulp
+
+
 
 ```
 /// <binding AfterBuild='ts' />
@@ -175,7 +197,8 @@ var paths = {
     minCss: webroot + "css/**/*.min.css",
     concatJsDest: webroot + "js/site.min.js",
     concatCssDest: webroot + "css/site.min.css",
-    lib: webroot + "lib/"
+    libSrc: "node_modules",
+    libDest: webroot + "lib/"
 };
 
 gulp.task("clean:js", function (cb) {
@@ -184,6 +207,10 @@ gulp.task("clean:js", function (cb) {
 
 gulp.task("clean:css", function (cb) {
     rimraf(paths.concatCssDest, cb);
+});
+
+gulp.task("clean:lib", function (cb) {
+    rimraf(paths.libDest, cb);
 });
 
 gulp.task("clean", ["clean:js", "clean:css"]);
@@ -204,9 +231,8 @@ gulp.task("min:css", function () {
 
 gulp.task("min", ["min:js", "min:css"]);
 
-//Copys scripts to wwwroot/lib folder
-// Thanks MITHUN PATTANKAR for idea for the two tasks below http://www.mithunvp.com/angular-2-in-asp-net-5-typescript-visual-studio-2015/
-gulp.task("CopyScripts", () => {
+// Copy libs to wwwroot/lib folder
+gulp.task("CopyLibs", () => {
     gulp.src([
             'core-js/client/shim.min.js',
             'es6-shim/es6-shim.min.js',
@@ -219,14 +245,14 @@ gulp.task("CopyScripts", () => {
             'jquery/dist/jquery.*js',
             'bootstrap/dist/js/bootstrap*.js'
     ], {
-        cwd: "node_modules/**"
+        cwd: paths.libSrc + "/**"
     })
-        .pipe(gulp.dest("./wwwroot/lib"));
+        .pipe(gulp.dest(paths.libDest));
 });
 
 
 // Compile typescript
-var tsProject = ts.createProject('scripts/tsconfig.json');
+var tsProject = ts.createProject('tsconfig.json');
 gulp.task('ts', function (done) {
     //var tsResult = tsProject.src()
     var tsResult = gulp.src([
@@ -236,6 +262,108 @@ gulp.task('ts', function (done) {
     return tsResult.js.pipe(gulp.dest('./wwwroot/app'));
 });
 ```
+### Run the CopyScripts to copy libs
+Open the Task Runner Explorer again, and right click on CopyScripts, and choose Run.
+
+### The Angular 2 Hello World test 
+Sample modified from the one provided by [angular.io](https://angular.io)
+
+scripts/app.component.ts
+```
+import { Component } from '@angular/core';
+@Component({
+  selector: 'my-app',
+  template: '<h1>`Hello World</h1>'
+})
+export class AppComponent { }
+```
+
+scripts/main.ts
+```
+import { bootstrap }    from '@angular/platform-browser-dynamic';
+import { AppComponent } from './app.component';
+bootstrap(AppComponent);
+```
+
+Views/Home/Index.cshtml
+```
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<my-app>Loading...</my-app>
+```
+
+Views/Shared/_Layout.cshtml
+```
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - losol.ListR</title>
+
+    <!-- 1. Load libraries -->
+    <!-- Polyfill(s) for older browsers -->
+    <script src="lib/core-js/client/shim.min.js"></script>
+    <script src="lib/zone.js/dist/zone.js"></script>
+    <script src="lib/reflect-metadata/Reflect.js"></script>
+    <script src="lib/systemjs/dist/system.src.js"></script>
+    <!-- 2. Configure SystemJS -->
+    <script src="systemjs.config.js"></script>
+    <script>
+      System.import('app').catch(function(err){ console.error(err); });
+    </script>
+
+    <environment names="Development">
+        <link rel="stylesheet" href="~/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+    </environment>
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="~/css/bootstrap.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    </environment>
+
+</head>
+<body>
+    @await Html.PartialAsync("_NavigationBar")
+    <div class="container body-content">
+        @RenderBody()
+        @await Html.PartialAsync("_Footer")
+    </div>
+
+    <environment names="Development">
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+
+```
+
+## Adding Bootstrap 4
+### Installing packages with npm
+In package.json 
+* Add to dependencies: "bootstrap": "4.0.0-alpha.2"
+* Add to devDependencies: "gulp-sass": "^2.3.2"
+
+### Adding task to gulpfile.js
+````json
+// Compile bootstrap
+gulp.task('CompileBootstrap', function () {
+    return gulp.src(paths.bootstrapSassSrc)
+      .pipe(sass())
+      .pipe(gulp.dest(paths.css))
+});
+```
+
+### Installing ng2-Bootstrap
+Since we are not using jquery we need an angular package for the bootstrap directives. 
+* Add to package.json:  "ng2-bootstrap": "^1.0.24"
 
 ## Set user secrets
 Install SecretManager tool by running this command in app folder: dnu commands install Microsoft.Extensions.SecretManager
