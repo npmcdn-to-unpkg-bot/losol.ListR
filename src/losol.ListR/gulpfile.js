@@ -21,11 +21,11 @@ var paths = {
     css: webroot + "css/**/*.css",
     cssDest: webroot + "css/",
     minCss: webroot + "css/**/*.min.css",
-    concatJsDest: webroot + "js/site.min.js",
-    concatCssDest: webroot + "css/site.min.css",
     libSrc: "node_modules",
     libDest: webroot + "lib/",
-    bootstrapSassSrc: "node_modules/bootstrap/scss/bootstrap.scss"
+    bootstrapSassSrc: "node_modules/bootstrap/scss/bootstrap.scss",
+    typescriptSrc: "scripts/**/*.ts",
+    typescriptDest: webroot + "app/",
 };
 
 gulp.task("clean:js", function (cb) {
@@ -81,11 +81,9 @@ gulp.task("CopyLibs", () => {
 // Compile typescript
 var tsProject = ts.createProject('tsconfig.json');
 gulp.task('ts', function (done) {
-    var tsResult = gulp.src([
-            "scripts/*.ts"
-    ])
+    var tsResult = gulp.src([paths.typescriptSrc])
         .pipe(ts(tsProject), undefined, ts.reporter.fullReporter());
-    return tsResult.js.pipe(gulp.dest('./wwwroot/app'));
+    return tsResult.js.pipe(gulp.dest(paths.typescriptDest));
 });
 
 // Compile bootstrap

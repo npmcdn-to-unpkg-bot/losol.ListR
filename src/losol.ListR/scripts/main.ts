@@ -1,8 +1,14 @@
 ﻿import {bootstrap} from '@angular/platform-browser-dynamic';
-import {AppComponent} from './app.component'
-import {enableProdMode} from '@angular/core';
 import {provideForms, disableDeprecatedForms} from '@angular/forms';
+// import {enableProdMode} from '@angular/core';
 
-enableProdMode();
+// Components
+import {Navbar} from './components/navbar';
+import {AppComponent} from './app.component';
+import {FriendComponent} from './friend.component';
 
+// enableProdMode();
+
+bootstrap(Navbar);
 bootstrap(AppComponent, [disableDeprecatedForms(), provideForms()]);
+bootstrap(FriendComponent, [disableDeprecatedForms(), provideForms()]);

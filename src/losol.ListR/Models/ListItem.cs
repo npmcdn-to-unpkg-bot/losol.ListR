@@ -36,7 +36,7 @@ namespace losol.ListR.Models
         [Display(Name = "Ferdig?")]
         public bool IsDone { get; set; }
 
-        [Display(Name = "Lagt til Dato")]
+        [Display(Name = "Lagt til (dato)")]
         [DataType(DataType.Date)]
         public DateTime AddedDate { get; set; }
 
