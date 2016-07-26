@@ -1,18 +1,13 @@
 import {Component, Directive} from '@angular/core';
-import {
-    CollapseDirective,
-    DROPDOWN_DIRECTIVES,
-    Ng2BootstrapConfig,
-    Ng2BootstrapTheme
-} from 'ng2-bootstrap';
+import { CollapseDirective } from 'ng2-bootstrap/ng2-bootstrap';
 
 @Component({
+    moduleId: module.id,
+    directives: [CollapseDirective],
     selector: 'header-navbar',
-    template: 'navbar-template.html',
-    directives: [
-    ]
+    templateUrl: 'navbar-template.html'
 })
 
 export class Navbar {
-    public isCollapsed: boolean = true;
+    public isCollapsed: boolean = false;
 }

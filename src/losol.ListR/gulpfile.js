@@ -1,4 +1,4 @@
-﻿/// <binding AfterBuild='ts' />
+﻿/// <binding AfterBuild='ts, typescript-html' />
 "use strict";
 
 var gulp = require("gulp"),
@@ -24,7 +24,7 @@ var paths = {
     libSrc: "node_modules",
     libDest: webroot + "lib/",
     bootstrapSassSrc: "node_modules/bootstrap/scss/bootstrap.scss",
-    typescriptSrc: "scripts/**/*.ts",
+    typescriptSrc: "scripts/",
     typescriptDest: webroot + "app/",
 };
 
@@ -81,10 +81,16 @@ gulp.task("CopyLibs", () => {
 // Compile typescript
 var tsProject = ts.createProject('tsconfig.json');
 gulp.task('ts', function (done) {
-    var tsResult = gulp.src([paths.typescriptSrc])
+    var tsResult = gulp.src([paths.typescriptSrc + '**/*.ts'])
         .pipe(ts(tsProject), undefined, ts.reporter.fullReporter());
     return tsResult.js.pipe(gulp.dest(paths.typescriptDest));
 });
+
+gulp.task('typescript-html', function () {
+    gulp.src(paths.typescriptSrc + '**/*.html')
+        .pipe(gulp.dest(paths.typescriptDest));
+});
+
 
 // Compile bootstrap
 gulp.task('CompileBootstrap', function () {

@@ -9,15 +9,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var ng2_bootstrap_1 = require('ng2-bootstrap/ng2-bootstrap');
 var Navbar = (function () {
     function Navbar() {
-        this.isCollapsed = true;
+        this.isCollapsed = false;
     }
     Navbar = __decorate([
         core_1.Component({
+            moduleId: module.id,
+            directives: [ng2_bootstrap_1.CollapseDirective],
             selector: 'header-navbar',
-            template: 'navbar-template.html',
-            directives: []
+            templateUrl: 'navbar-template.html'
         }), 
         __metadata('design:paramtypes', [])
     ], Navbar);
