@@ -12,13 +12,13 @@ export class ListitemsComponent {
         this._listitemsService = _listitemsService;
     }
 
-    getCountriesByRegion() {
+    getListitems() {
         this.error = "";
-        this.countries = [];
-        this._listitemsService.getCountriesByRegion(this.region)
+        this.listitems = [];
+        this._listitemsService.getListitems(this.listId)
             .subscribe(
-            data => this.countries = data,
-            error => this.error = "Region " + this.region + " is invalid."
+            data => this.listitems = data,
+            error => this.error = "List id " + this.listId + " is invalid."
             );
     }
 }

@@ -1,10 +1,10 @@
-﻿<p>Dette er lista:</p>
-<form (ngSubmit)="getCountriesByRegion()">
-    <label>Region:</label>
-    <input type="text" [(ngModel)]="region" required>
-    <button type="submit">Search</button>
+﻿
+<form (ngSubmit)="getListitems()">
+    <label>ListId:</label>
+    <input type="text" [(ngModel)]="listId" required>
+    <button type="submit">Open</button>
 </form>
 <hr>
 <p style="color:red">{{error}}</p>
-<h1>Countries in {{region}}</h1>
-<div *ngFor="#country of countries">{{country.name}}</div>
+<h1>Listitems in {{listId}}</h1>
+<div *ngFor="#listitem of listitems">{{listitem.description}}</div>

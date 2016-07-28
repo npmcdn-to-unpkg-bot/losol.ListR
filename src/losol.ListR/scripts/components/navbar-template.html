@@ -1,5 +1,5 @@
 ﻿<nav class="navbar navbar-light bg-faded">
-    <button class="navbar navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed">
+    <button class="navbar-toggler hidden-sm-up" type="button" (click)="isCollapsed = !isCollapsed">
         &#9776;
     </button>
     <div class="collapse navbar-toggleable-xs" id="CollapsingNavbar" [collapse]="isCollapsed">
@@ -16,5 +16,5 @@
             </li>
         </ul>
     </div>
-    <p> {{isCollapsed}}</p>
+    <p>Er jeg kollapset? {{isCollapsed}}</p>
 </nav>

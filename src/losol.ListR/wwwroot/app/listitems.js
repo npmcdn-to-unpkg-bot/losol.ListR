@@ -15,12 +15,12 @@ var ListitemsComponent = (function () {
         this._listitemsService = _listitemsService;
         this._listitemsService = _listitemsService;
     }
-    ListitemsComponent.prototype.getCountriesByRegion = function () {
+    ListitemsComponent.prototype.getListitems = function () {
         var _this = this;
         this.error = "";
-        this.countries = [];
-        this._listitemsService.getCountriesByRegion(this.region)
-            .subscribe(function (data) { return _this.countries = data; }, function (error) { return _this.error = "Region " + _this.region + " is invalid."; });
+        this.listitems = [];
+        this._listitemsService.getListitems(this.listId)
+            .subscribe(function (data) { return _this.listitems = data; }, function (error) { return _this.error = "List id " + _this.listId + " is invalid."; });
     };
     ListitemsComponent = __decorate([
         core_1.Component({

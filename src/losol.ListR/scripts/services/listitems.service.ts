@@ -7,10 +7,15 @@ import 'rxjs/Rx';
 export class ListitemsService {
 
     endpoint_url: String = "https://restcountries.eu/rest/v1/region/";
+    getitems_url: String = "http://localhost:5000/api/ListItemsApi";
 
     constructor(private http: Http) {}
 
     getCountriesByRegion(region: String) {
         return this.http.get(this.endpoint_url + region).map(res => res.json());
+    }
+
+    getListitems(listId: String) {
+        return this.http.get(this.getitems_url).map(res => res.json());
     }
 }
