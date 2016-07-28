@@ -352,7 +352,7 @@ In package.json
 * Add to devDependencies: "gulp-sass": "^2.3.2"
 
 ### Adding task to gulpfile.js
-````json
+```json
 // Compile bootstrap
 gulp.task('CompileBootstrap', function () {
     return gulp.src(paths.bootstrapSassSrc)
@@ -364,6 +364,18 @@ gulp.task('CompileBootstrap', function () {
 ### Installing ng2-Bootstrap
 Since we are not using jquery we need an angular package for the bootstrap directives. 
 * Add to package.json:  "ng2-bootstrap": "^1.0.24"
+
+
+## Adding Glimpse
+Add package in package.json: 
+    "Glimpse": "2.0.0-beta1".
+
+Edit your startup.cs:
+* Added to ConfigureServices(...): ```services.AddGlimpse();```
+* Added to Configure(...):  ```app.UseGlimpse();```
+
+
+
 
 ## Set user secrets
 Install SecretManager tool by running this command in app folder: dnu commands install Microsoft.Extensions.SecretManager

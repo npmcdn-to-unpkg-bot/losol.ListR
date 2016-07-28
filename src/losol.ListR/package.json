@@ -30,7 +30,8 @@
     "bootstrap": "4.0.0-alpha.2",
     "ng2-bootstrap": "^1.0.24",
     "moment": "^2.14.1",
-    "symbol-observable": "^1.0.1"
+    "symbol-observable": "^1.0.1",
+    "glimpse": "2.0.0-beta1"
   },
   "devDependencies": {
     "concurrently": "^2.0.0",
