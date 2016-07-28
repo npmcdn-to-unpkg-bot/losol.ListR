@@ -1,10 +1,10 @@
 
 <form (ngSubmit)="getListitems()">
     <label>ListId:</label>
-    <input type="text" [(ngModel)]="listId" required>
+    <input type="text" [(ngModel)]="listId" name="listId">
     <button type="submit">Open</button>
 </form>
 <hr>
 <p style="color:red">{{error}}</p>
 <h1>Listitems in {{listId}}</h1>
-<div *ngFor="#listitem of listitems">{{listitem.description}}</div>
+<div *ngFor="let listitem of listitems">{{listitem.description}}</div>

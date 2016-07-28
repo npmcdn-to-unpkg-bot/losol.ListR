@@ -11,16 +11,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
 require('rxjs/Rx');
-// should probably get to here: import { Observable }     from 'rxjs/Observable';  // https://angular.io/docs/ts/latest/guide/server-communication.html
 var ListitemsService = (function () {
     function ListitemsService(http) {
         this.http = http;
-        this.endpoint_url = "https://restcountries.eu/rest/v1/region/";
         this.getitems_url = "http://localhost:5000/api/ListItemsApi";
     }
-    ListitemsService.prototype.getCountriesByRegion = function (region) {
-        return this.http.get(this.endpoint_url + region).map(function (res) { return res.json(); });
-    };
     ListitemsService.prototype.getListitems = function (listId) {
         return this.http.get(this.getitems_url).map(function (res) { return res.json(); });
     };
