@@ -14,3 +14,4 @@ platform_browser_dynamic_1.bootstrap(navbar_1.Navbar);
 platform_browser_dynamic_1.bootstrap(app_component_1.AppComponent, [forms_1.disableDeprecatedForms(), forms_1.provideForms()]);
 platform_browser_dynamic_1.bootstrap(friend_component_1.FriendComponent, [forms_1.disableDeprecatedForms(), forms_1.provideForms()]);
 platform_browser_dynamic_1.bootstrap(listitems_1.ListitemsComponent, [http_1.HTTP_PROVIDERS]);
+//# sourceMappingURL=main.js.map
