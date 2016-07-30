@@ -419,6 +419,40 @@ To run the Kestrel server, run
 
 or dotnet watch
 
+## Require SSL connections
+### Make self signed SSL certificate
+1. Run powershell as administrator (Start --> Type in 'powershell' --> Right click and run as administrator)
+2. Run this command: ``` New-SelfSignedCertificate -certstorelocation cert:\localmachine\my -dnsname self-signed-cert ```
+3. Take a copy of the thumbprint
+4. Run ``` $pwd = ConvertTo-SecureString -String "SmartPassw0rd" -Force -AsPlainText ```
+5. Export-PfxCertificate -cert cert:\localMachine\my\###THUMBRINT### -FilePath selfsignedcert.pfx -Password $pwd
+
+
+### Add https capabilities to Kestrel 
+* In project.json - add ``` "Microsoft.AspNetCore.Server.Kestrel.Https": "1.0.0" ```
+* In program.cs
+```
+            // Define ssl certificate
+            var certFile = Directory.GetCurrentDirectory() + "\\selfsignedcert.pfx";
+            var signingCertificate = new System.Security.Cryptography.X509Certificates.X509Certificate2(certFile, "selfsignedcert.io");
+            
+			// Set Options, including certificate specifications.
+            var host = new WebHostBuilder()
+                .UseKestrel(options => {
+                    options.UseHttps(signingCertificate); }
+                    )
+                .UseContentRoot(Directory.GetCurrentDirectory())
+                .UseIISIntegration()
+                .UseStartup<Startup>()
+                .Build();
+```
+
+## Adding email verification
+1. Enable SSL (see another section)
+
+
+
+Read more: https://docs.asp.net/en/latest/security/authentication/accconfirm.html
 ## Going live on Azure
 For some reason I had trouble configuring the connectionstring to the azure sql database. However after adding the connectionstring both as DefaultConnection as well as Data:DefaultConnection:ConnectionString I managed to get the application to talk with the database.
 

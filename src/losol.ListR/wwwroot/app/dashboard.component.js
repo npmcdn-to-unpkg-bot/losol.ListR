@@ -11,23 +11,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
 var listitem_service_1 = require('./listitem.service');
-require('./rxjs-extensions');
-var AppComponent = (function () {
-    function AppComponent() {
-        this.title = 'Listr';
+var DashboardComponent = (function () {
+    function DashboardComponent(router, listitemService) {
+        this.router = router;
+        this.listitemService = listitemService;
+        this.listitems = [];
     }
-    AppComponent = __decorate([
+    DashboardComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.listitemService.getListitems()
+            .then(function (listitems) { return _this.listitems = listitems.slice(1, 5); });
+    };
+    DashboardComponent.prototype.gotoDetail = function (listitem) {
+        var link = ['/detail', listitem.id];
+        this.router.navigate(link);
+    };
+    DashboardComponent = __decorate([
         core_1.Component({
-            selector: 'listr',
-            template: "\n    <h1>{{title}}</h1>\n    <nav>\n      <a [routerLink]=\"['/dashboard']\" routerLinkActive=\"active\">Dashboard</a>\n      <a [routerLink]=\"['/listitems']\" routerLinkActive=\"active\">Listitems</a>\n    </nav>\n    <router-outlet></router-outlet>\n  ",
-            directives: [router_1.ROUTER_DIRECTIVES],
-            providers: [
-                listitem_service_1.ListitemService,
-            ]
+            selector: 'my-dashboard',
+            templateUrl: 'app/dashboard.component.html',
         }), 
-        __metadata('design:paramtypes', [])
-    ], AppComponent);
-    return AppComponent;
+        __metadata('design:paramtypes', [router_1.Router, listitem_service_1.ListitemService])
+    ], DashboardComponent);
+    return DashboardComponent;
 }());
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+exports.DashboardComponent = DashboardComponent;

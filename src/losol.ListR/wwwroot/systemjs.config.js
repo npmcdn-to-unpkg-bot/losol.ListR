@@ -5,9 +5,9 @@
 (function (global) {
     // map tells the System loader where to look for things
     var map = {
-        'moment': 'lib/moment/min/moment-with-locales.min.js',
         'app': 'app', // 'dist',
         '@angular': 'lib/@angular',
+        '@angular/router': 'lib/@angular/router',
         'angular2-in-memory-web-api': 'lib/angular2-in-memory-web-api',
         'rxjs': 'lib/rxjs'
     };

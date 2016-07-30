@@ -11,19 +11,27 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
 require('rxjs/Rx');
-var ListitemsService = (function () {
-    function ListitemsService(http) {
+var ListitemService = (function () {
+    function ListitemService(http) {
         this.http = http;
-        this.getitems_url = "http://localhost:5000/api/ListItemsApi";
+        this.getitems_url = "https://localhost:5001/api/ListItemsApi";
     }
-    ListitemsService.prototype.getListitems = function (listId) {
+    ListitemService.prototype.getListitems = function (listId) {
         return this.http.get(this.getitems_url).map(function (res) { return res.json(); });
     };
-    ListitemsService = __decorate([
+    ListitemService.prototype.getListitemsSlowly = function (listId) {
+        var _this = this;
+        return new Promise(function (resolve) {
+            return setTimeout(function () { return _this.http.get(_this.getitems_url).map(function (res) { return res.json(); }); }, 2000);
+        } // 2 seconds
+         // 2 seconds
+        );
+    };
+    ListitemService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [http_1.Http])
-    ], ListitemsService);
-    return ListitemsService;
+    ], ListitemService);
+    return ListitemService;
 }());
-exports.ListitemsService = ListitemsService;
+exports.ListitemService = ListitemService;
 //# sourceMappingURL=listitems.service.js.map

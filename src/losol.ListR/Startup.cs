@@ -12,6 +12,9 @@ using Microsoft.Extensions.Logging;
 using losol.ListR.Data;
 using losol.ListR.Models;
 using losol.ListR.Services;
+using Microsoft.Extensions.PlatformAbstractions;
+using System.IO;
+using Microsoft.AspNetCore.Server.Kestrel;
 
 namespace losol.ListR
 {
@@ -39,6 +42,7 @@ namespace losol.ListR
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
             // Add framework services.
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -48,6 +52,7 @@ namespace losol.ListR
                 .AddDefaultTokenProviders();
 
             services.AddMvc();
+          
 
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
@@ -59,6 +64,7 @@ namespace losol.ListR
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+            
 
             if (env.IsDevelopment())
             {
@@ -74,6 +80,8 @@ namespace losol.ListR
             app.UseStaticFiles();
 
             app.UseIdentity();
+
+        
 
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
 

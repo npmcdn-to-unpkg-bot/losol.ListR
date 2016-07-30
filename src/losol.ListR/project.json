@@ -1,4 +1,8 @@
 ﻿{
+  "title": "losol.ListR",
+  "copyright": "Losol AS",
+  "description": "A simple list keeping application",
+  "language": "en",
   "userSecretsId": "aspnet-losol.ListR-dfbab7f0-41eb-4961-b0ff-8717f6d9fd41",
 
   "dependencies": {
@@ -17,6 +21,7 @@
     },
     "Microsoft.AspNetCore.Server.IISIntegration": "1.0.0",
     "Microsoft.AspNetCore.Server.Kestrel": "1.0.0",
+    "Microsoft.AspNetCore.Server.Kestrel.Https": "1.0.0",
     "Microsoft.AspNetCore.StaticFiles": "1.0.0",
     "Microsoft.EntityFrameworkCore.SqlServer": "1.0.0",
     "Microsoft.EntityFrameworkCore.SqlServer.Design": {

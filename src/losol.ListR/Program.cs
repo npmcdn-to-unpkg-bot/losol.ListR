@@ -11,8 +11,16 @@ namespace losol.ListR
     {
         public static void Main(string[] args)
         {
+            // Define ssl certificate file
+            var certFile = "selfsignedcert.pfx";
+            var signingCertificate = new System.Security.Cryptography.X509Certificates.X509Certificate2(certFile, "lappen");
+            
             var host = new WebHostBuilder()
-                .UseKestrel()
+                .UseKestrel(options => {
+                    options.UseHttps(signingCertificate);
+                    }
+                    )
+                .UseUrls("https://localhost:5001")
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
                 .UseStartup<Startup>()

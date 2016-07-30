@@ -1,0 +1,20 @@
+﻿<h2>Shopping list</h2>
+<ul class="listr">
+    <li *ngFor="let listitem of listitemes" (click)="onSelect(listitem)" [class.selected]="listitem === selectedListitem">
+        <span class="listitem-element">
+            <span class="badge">{{listitem.id}}</span> {{listitem.description}}
+        </span>
+        <button class="delete-button" (click)="deleteListitem(listitem, $event)">Delete</button>
+    </li>
+</ul>
+<div class="error" *ngIf="error">{{error}}</div>
+<button (click)="addListitem()">Add New Listitem</button>
+<div *ngIf="addingListitem">
+    <listitem-detail (close)="close($event)"></listitem-detail>
+</div>
+<div *ngIf="selectedListitem">
+    <h2>
+        {{listitem.description | uppercase}} is my listitem
+    </h2>
+   
+</div>
